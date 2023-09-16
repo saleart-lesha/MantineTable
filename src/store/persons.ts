@@ -8,26 +8,7 @@ interface IPersonsState{
 }
 
 const initialState: IPersonsState = {
-    list: [
-        // {
-        //     id: "1",
-        //     firstName: 'Zachary',
-        //     lastName: 'Davis',
-        //     address: '261 Battle Ford',
-        //   },
-        //   {
-        //     id: "2",
-        //     firstName: 'Robert',
-        //     lastName: 'Smith',
-        //     address: '566 Brakus Inlet',
-        //   },
-        //   {
-        //     id: "3",
-        //     firstName: 'Kevin',
-        //     lastName: 'Yan',
-        //     address: '7777 Kuhic Knoll',
-        //   },
-    ],
+    list: [],
 }
 
 export const getPersons = createAsyncThunk(
@@ -42,7 +23,16 @@ export const getPersons = createAsyncThunk(
 const counterSlice = createSlice({
     name: 'persons',
     initialState,
-    reducers:{},
+    reducers:{
+        addRow: (state, action) =>{
+            state.list.push({
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                address: action.payload.address,
+
+            })
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getPersons.fulfilled, (state, action) => {
             state.list = action.payload
@@ -51,4 +41,5 @@ const counterSlice = createSlice({
     
 })
 
+export const {addRow} = counterSlice.actions;
 export default counterSlice.reducer;

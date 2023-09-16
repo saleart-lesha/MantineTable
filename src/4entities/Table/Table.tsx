@@ -13,7 +13,7 @@ import { ActionIcon, Box, Button, Flex, Input } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { RootState, useStoreDispatch } from '../../store/store';
 import { useSelector } from 'react-redux';
-import { getPersons } from '../../store/persons';
+import { addRow, getPersons } from '../../store/persons';
 
 const Table = () => {
 
@@ -27,13 +27,6 @@ const Table = () => {
   
   
   const [tableData, setTableData] = useState<Person[]>(data);
-
-
-  
-
-  // useEffect(() => {
-  //   dispatch(getPersons())
-  // }, [dispatch])
 
 
   const columns = useMemo<MRT_ColumnDef<Person>[]>(
@@ -111,9 +104,10 @@ const Table = () => {
           lastName: event.target[1].value,
           address: event.target[2].value,
         };
+        dispatch(addRow(newRecord))
 
         // Добавляем запись
-        setTableData((prevState) => [...prevState, newRecord]);
+        // setTableData((prevState) => [...prevState, newRecord]);
       };
 
       const createInputFields = () => {
