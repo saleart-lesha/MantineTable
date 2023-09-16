@@ -8,12 +8,12 @@ import {
   MRT_GlobalFilterTextInput,
 } from 'mantine-react-table';
 
-import { data, type Person } from './store';
 import { ActionIcon, Box, Button, Flex, Input } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { RootState, useStoreDispatch } from '../../store/store';
 import { useSelector } from 'react-redux';
-import { addRow, getPersons } from '../../store/persons';
+import { addRow, getPersons, removeRow } from '../../store/persons';
+import { IPerson } from '../../store/IPerson';
 
 const Table = () => {
 
@@ -26,10 +26,10 @@ const Table = () => {
   
   
   
-  const [tableData, setTableData] = useState<Person[]>(data);
+  const [tableData, setTableData] = useState<IPerson[]>(persons);
 
 
-  const columns = useMemo<MRT_ColumnDef<Person>[]>(
+  const columns = useMemo<MRT_ColumnDef<IPerson>[]>(
     () => [
       {
         accessorKey: 'firstName',
@@ -50,7 +50,7 @@ const Table = () => {
     []
   );
 
-  const handleSaveRow: MRT_TableOptions<Person>['onEditingRowSave'] = async ({
+  const handleSaveRow: MRT_TableOptions<IPerson>['onEditingRowSave'] = async ({
     row,
     table,
     values,
@@ -85,10 +85,7 @@ const Table = () => {
         <ActionIcon
           color="red"
           onClick={() => {
-            // Удаляем запись
-            const updatedData = [...tableData];
-            updatedData.splice(row.index, 1);
-            setTableData(updatedData);
+            dispatch(removeRow({ firstName: row.original.firstName }));
           }}
         >
           <IconTrash />
@@ -105,9 +102,6 @@ const Table = () => {
           address: event.target[2].value,
         };
         dispatch(addRow(newRecord))
-
-        // Добавляем запись
-        // setTableData((prevState) => [...prevState, newRecord]);
       };
 
       const createInputFields = () => {

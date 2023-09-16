@@ -31,7 +31,15 @@ const counterSlice = createSlice({
                 address: action.payload.address,
 
             })
-        }
+        },
+
+        removeRow: (state, action) => {
+            debugger
+            state.list = state.list.filter(person => person.firstName !== action.payload.firstName);
+          }
+          
+          // dispatch(removeRow({ firstName: row.original.firstName }));
+          
     },
     extraReducers: (builder) => {
         builder.addCase(getPersons.fulfilled, (state, action) => {
@@ -41,5 +49,5 @@ const counterSlice = createSlice({
     
 })
 
-export const {addRow} = counterSlice.actions;
+export const {addRow, removeRow} = counterSlice.actions;
 export default counterSlice.reducer;
