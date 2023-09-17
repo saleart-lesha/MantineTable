@@ -14,19 +14,13 @@ import { RootState, useStoreDispatch } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { addRow, getPersons, removeRow, removePerson } from '../../store/personsSlice';
 import { IPerson } from '../../store/IPerson';
+import { useGetPersonsQuery } from '../../redux';
 
 const Table = () => {
-
-  const dispatch = useStoreDispatch()
-  const persons = useSelector((state: RootState) => state.persons.list)
-
-  useEffect(() => {
-    dispatch(getPersons());
-  }, [dispatch]);
   
+  const {data = []} = useGetPersonsQuery(null)
   
-  
-  const [tableData, setTableData] = useState<IPerson[]>(persons);
+  const [tableData, setTableData] = useState<IPerson[]>(data);
 
 
   const columns = useMemo<MRT_ColumnDef<IPerson>[]>(
@@ -62,7 +56,7 @@ const Table = () => {
 
   const table = useMantineReactTable({
     columns,
-    data: persons,
+    data: data,
     enableFullScreenToggle: false,
     enableDensityToggle: false,
     enableHiding: false,
@@ -85,7 +79,7 @@ const Table = () => {
         <ActionIcon
           color="red"
           onClick={() => {
-            dispatch(removePerson(row.original.id));
+            // dispatch(removePerson(row.original.id));
           }}
         >
           <IconTrash />
@@ -101,7 +95,7 @@ const Table = () => {
           lastName: event.target[1].value,
           address: event.target[2].value,
         };
-        dispatch(addRow(newRecord))
+        // dispatch(addRow(newRecord))
       };
 
       const createInputFields = () => {
