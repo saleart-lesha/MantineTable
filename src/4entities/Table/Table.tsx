@@ -10,15 +10,13 @@ import {
 
 import { ActionIcon, Box, Button, Flex, Input } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { RootState, useStoreDispatch } from '../../store/store';
-import { useSelector } from 'react-redux';
-import { addRow, getPersons, removeRow, removePerson } from '../../store/personsSlice';
 import { IPerson } from '../../store/IPerson';
-import { useGetPersonsQuery } from '../../redux';
+import { useAddRowMutation, useGetPersonsQuery } from '../../redux';
 
 const Table = () => {
-  
+
   const {data = []} = useGetPersonsQuery(null)
+  const [addPerson] = useAddRowMutation();
   
   const [tableData, setTableData] = useState<IPerson[]>(data);
 
@@ -87,7 +85,7 @@ const Table = () => {
       </Box>
     ),
     renderTopToolbar: ({ table }) => {
-      const addDate = (event: any) => {
+      const addDate = async (event: any) => {
         event.preventDefault();
 
         const newRecord: any = {
@@ -95,6 +93,7 @@ const Table = () => {
           lastName: event.target[1].value,
           address: event.target[2].value,
         };
+        await addPerson(newRecord).unwrap()
         // dispatch(addRow(newRecord))
       };
 
