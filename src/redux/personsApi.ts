@@ -22,8 +22,15 @@ export const personsApi = createApi({
                 body,
             }),
             invalidatesTags: ['Persons']
+        }),
+        removeRow: build.mutation({
+            query: (id) => ({
+                url: `data/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Persons']
         })
     })
 })
 
-export const {useGetPersonsQuery, useAddRowMutation} = personsApi;
+export const {useGetPersonsQuery, useAddRowMutation, useRemoveRowMutation} = personsApi;

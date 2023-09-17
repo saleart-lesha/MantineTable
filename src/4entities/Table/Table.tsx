@@ -11,12 +11,15 @@ import {
 import { ActionIcon, Box, Button, Flex, Input } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { IPerson } from '../../store/IPerson';
-import { useAddRowMutation, useGetPersonsQuery } from '../../redux';
+import { useAddRowMutation, useGetPersonsQuery, useRemoveRowMutation } from '../../redux';
 
 const Table = () => {
 
   const {data = []} = useGetPersonsQuery(null)
   const [addPerson] = useAddRowMutation();
+  const [removePerson] = useRemoveRowMutation();
+
+  
   
   const [tableData, setTableData] = useState<IPerson[]>(data);
 
@@ -76,9 +79,10 @@ const Table = () => {
         </ActionIcon>
         <ActionIcon
           color="red"
-          onClick={() => {
-            // dispatch(removePerson(row.original.id));
-          }}
+          onClick={ async (id) => {
+            await removePerson(row.original.id).unwrap();
+          }
+          }
         >
           <IconTrash />
         </ActionIcon>
@@ -94,7 +98,6 @@ const Table = () => {
           address: event.target[2].value,
         };
         await addPerson(newRecord).unwrap()
-        // dispatch(addRow(newRecord))
       };
 
       const createInputFields = () => {
