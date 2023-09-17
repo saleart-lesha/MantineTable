@@ -12,7 +12,7 @@ import { ActionIcon, Box, Button, Flex, Input } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { RootState, useStoreDispatch } from '../../store/store';
 import { useSelector } from 'react-redux';
-import { addRow, getPersons, removeRow } from '../../store/persons';
+import { addRow, getPersons, removeRow, removePerson } from '../../store/personsSlice';
 import { IPerson } from '../../store/IPerson';
 
 const Table = () => {
@@ -85,7 +85,7 @@ const Table = () => {
         <ActionIcon
           color="red"
           onClick={() => {
-            dispatch(removeRow({ firstName: row.original.firstName }));
+            dispatch(removePerson(row.original.id));
           }}
         >
           <IconTrash />
