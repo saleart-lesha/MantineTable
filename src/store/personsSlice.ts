@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IPerson } from "./IPerson";
-import { getPersonsApi } from "../api/persons";
+import { IPerson } from "../redux/IPerson";
+import { getPersonsApi } from "./persons";
 
 
 interface IPersonsState{
