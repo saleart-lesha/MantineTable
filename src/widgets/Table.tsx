@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   MantineReactTable,
   useMantineReactTable,
@@ -6,6 +6,7 @@ import {
   type MRT_TableOptions,
   MRT_Row,
   MRT_TableInstance,
+  MRT_SortingState,
 } from 'mantine-react-table';
 import { IPerson } from '../redux';
 import {
@@ -61,6 +62,21 @@ const Table = () => {
     table.setEditingRow(null);
   };
 
+  const [sorting, setSorting] = useState<MRT_SortingState>([]);
+
+  useEffect(() => {
+    const data = localStorage.getItem('filters');
+    if(data)
+    {
+      setSorting(JSON.parse(data))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('filters', JSON.stringify(sorting))
+  })
+
+
   const table: MRT_TableInstance<IPerson> = useMantineReactTable({
     columns,
     data: data,
@@ -70,6 +86,8 @@ const Table = () => {
     enableRowActions: true,
     positionActionsColumn: POSITION_ACTIONS_COLUMN,
     enableEditing: true,
+    state: {sorting},
+    onSortingChange: setSorting,
     initialState: { showColumnFilters: false, showGlobalFilter: true },
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
