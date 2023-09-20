@@ -1,29 +1,34 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit';
 
-interface TableState {
-    sorting: {id: string, desc: boolean}
+interface InitialState {
+  sorting: LocalStorage[] | undefined;
 }
 
-const initialState: TableState = {
-    sorting: {id: 'name', desc: false}
+export interface LocalStorage {
+  id: string;
+  value: string;
 }
+
+const localStorageSorting = localStorage.getItem('filters');
+
+const initialState: InitialState = { sorting: [] };
+
+if (localStorageSorting) {
+  initialState.sorting = [...JSON.parse(localStorageSorting)];
+}
+
+console.log(initialState);
 
 const tableSlice = createSlice({
-    name: 'table',
-    initialState,
-    reducers: {
-        setSorting: (state, action) => {
-            console.log("qwerqwer")
-            return {
-                ...state,
-                sorting: {
-                    id: action.payload.id,
-                    desc: action.payload.desc
-                },
-            }
-        },
-    }
-})
+  name: 'table',
+  initialState,
+  reducers: {
+    setSorting: (state, action) => {
+      localStorage.setItem('filters', JSON.stringify(action.payload));
+      return { ...state, sorting: action.payload };
+    },
+  },
+});
 
-export const {setSorting} = tableSlice.actions;
+export const { setSorting } = tableSlice.actions;
 export default tableSlice.reducer;

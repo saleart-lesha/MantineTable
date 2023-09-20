@@ -16,6 +16,8 @@ import {
 } from '../redux';
 import { RowActions } from '../entities/RowActions';
 import { RenderTopToolbar } from './RenderTopToolbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { LocalStorage, setSorting } from '../redux/tableSlice';
 
 const POSITION_ACTIONS_COLUMN = 'last';
 const MANTINE_PLACEHOLDER = 'Поиск';
@@ -62,20 +64,13 @@ const Table = () => {
     table.setEditingRow(null);
   };
 
-  const [sorting, setSorting] = useState<MRT_SortingState>([]);
+  const dispatch = useDispatch();
+  const tableState = useSelector((state: any) => state.table);
 
-  useEffect(() => {
-    const data = localStorage.getItem('filters');
-    if(data)
-    {
-      setSorting(JSON.parse(data))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('filters', JSON.stringify(sorting))
-  })
-
+  const onSortingChange = (t: any) => {
+    const newSorting = t(tableState.sorting);
+    dispatch(setSorting(newSorting));
+  };
 
   const table: MRT_TableInstance<IPerson> = useMantineReactTable({
     columns,
@@ -86,9 +81,8 @@ const Table = () => {
     enableRowActions: true,
     positionActionsColumn: POSITION_ACTIONS_COLUMN,
     enableEditing: true,
-    state: {sorting},
-    onSortingChange: setSorting,
-    initialState: { showColumnFilters: false, showGlobalFilter: true },
+    state: { sorting: tableState.sorting },
+    onSortingChange,
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
     renderRowActions: ({ row }: { row: MRT_Row<IPerson> }) => (
