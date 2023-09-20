@@ -17,7 +17,7 @@ import {
 import { RowActions } from '../entities/RowActions';
 import { RenderTopToolbar } from './RenderTopToolbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { LocalStorage, setSorting } from '../redux/tableSlice';
+import { LocalStorage, setSerching, setSorting } from '../redux/tableSlice';
 
 const POSITION_ACTIONS_COLUMN = 'last';
 const MANTINE_PLACEHOLDER = 'Поиск';
@@ -72,6 +72,10 @@ const Table = () => {
     dispatch(setSorting(newSorting));
   };
 
+  const onGlobalFilterChange = (newFilters: any) => {
+    dispatch(setSerching(newFilters));
+  }
+  
   const table: MRT_TableInstance<IPerson> = useMantineReactTable({
     columns,
     data: data,
@@ -81,8 +85,10 @@ const Table = () => {
     enableRowActions: true,
     positionActionsColumn: POSITION_ACTIONS_COLUMN,
     enableEditing: true,
-    state: { sorting: tableState.sorting },
-    onSortingChange,
+    enableGlobalFilterRankedResults: false,
+    state: { sorting: tableState.sorting, showGlobalFilter: true, globalFilter: tableState.serching},
+    onSortingChange: onSortingChange,
+    onGlobalFilterChange: onGlobalFilterChange,
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
     renderRowActions: ({ row }: { row: MRT_Row<IPerson> }) => (
