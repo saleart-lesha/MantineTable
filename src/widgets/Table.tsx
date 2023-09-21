@@ -7,6 +7,7 @@ import {
   MRT_Row,
   MRT_TableInstance,
   MRT_SortingState,
+  MRT_PaginationState,
 } from 'mantine-react-table';
 import { IPerson } from '../redux';
 import {
@@ -17,7 +18,7 @@ import {
 import { RowActions } from '../entities/RowActions';
 import { RenderTopToolbar } from './RenderTopToolbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { LocalStorage, setSerching, setSorting } from '../redux/tableSlice';
+import { LocalStorage, setPagination, setSerching, setSorting } from '../redux/tableSlice';
 
 const POSITION_ACTIONS_COLUMN = 'last';
 const MANTINE_PLACEHOLDER = 'Поиск';
@@ -75,7 +76,12 @@ const Table = () => {
   const onGlobalFilterChange = (newFilters: any) => {
     dispatch(setSerching(newFilters));
   }
-  
+
+  const onPaginationChange = (t: any) => {
+    const newPagination = t(tableState.pagination);
+    dispatch(setPagination(newPagination));
+  }
+
   const table: MRT_TableInstance<IPerson> = useMantineReactTable({
     columns,
     data: data,
@@ -86,9 +92,10 @@ const Table = () => {
     positionActionsColumn: POSITION_ACTIONS_COLUMN,
     enableEditing: true,
     enableGlobalFilterRankedResults: false,
-    state: { sorting: tableState.sorting, showGlobalFilter: true, globalFilter: tableState.serching},
+    state: { sorting: tableState.sorting, showGlobalFilter: true, globalFilter: tableState.serching, pagination: tableState.pagination},
     onSortingChange: onSortingChange,
     onGlobalFilterChange: onGlobalFilterChange,
+    onPaginationChange: onPaginationChange,
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
     renderRowActions: ({ row }: { row: MRT_Row<IPerson> }) => (
