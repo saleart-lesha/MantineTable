@@ -33,7 +33,6 @@ const Table = () => {
   const { data = [] } = useGetPersonsQuery(null);
   const [addPerson] = useAddRowMutation();
   const [removePerson] = useRemoveRowMutation();
-  const [tableData, setTableData] = useState<IPerson[]>(data);
   const [editingPerson] = useEditingRowMutation();
   const columns = useMemo<MRT_ColumnDef<IPerson>[]>(
     () => [

@@ -1,12 +1,6 @@
 {
   "data": [
     {
-      "firstName": "Zachary",
-      "lastName": "Davis",
-      "address": "261 Battle Ford",
-      "id": 1
-    },
-    {
       "id": 2,
       "firstName": "Robert",
       "lastName": "Smith",
@@ -23,12 +17,6 @@
       "lastName": "123",
       "address": "123",
       "id": 4
-    },
-    {
-      "firstName": "123",
-      "lastName": "123",
-      "address": "123",
-      "id": 5
     }
   ]
 }

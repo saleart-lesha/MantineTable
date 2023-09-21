@@ -5,6 +5,5 @@ export const addTableRow = async (event: any, addPerson: any) => {
     lastName: event.target[1].value,
     address: event.target[2].value,
   };
-  
   await addPerson(newRecord).unwrap();
 };
