@@ -9,7 +9,7 @@ import {
   MRT_SortingState,
   MRT_PaginationState,
 } from 'mantine-react-table';
-import { IPerson } from '../redux';
+import { IPerson, useEditingRowMutation } from '../redux';
 import {
   useAddRowMutation,
   useGetPersonsQuery,
@@ -34,6 +34,7 @@ const Table = () => {
   const [addPerson] = useAddRowMutation();
   const [removePerson] = useRemoveRowMutation();
   const [tableData, setTableData] = useState<IPerson[]>(data);
+  const [editingPerson] = useEditingRowMutation();
   const columns = useMemo<MRT_ColumnDef<IPerson>[]>(
     () => [
       {
@@ -60,8 +61,7 @@ const Table = () => {
     table,
     values,
   }: IHandleSaveRow) => {
-    tableData[row.index] = values;
-    setTableData([...tableData]);
+    await editingPerson({id: row.original.id, ...values});
     table.setEditingRow(null);
   };
 
