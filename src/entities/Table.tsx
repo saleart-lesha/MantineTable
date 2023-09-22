@@ -1,71 +1,37 @@
-import React, { useEffect, useMemo, useState } from 'react';
 import {
   MantineReactTable,
   useMantineReactTable,
-  type MRT_ColumnDef,
   type MRT_TableOptions,
   MRT_Row,
   MRT_TableInstance,
-  MRT_SortingState,
-  MRT_PaginationState,
 } from 'mantine-react-table';
-import { IPerson, useEditingRowMutation } from '../redux';
-import {
-  useAddRowMutation,
-  useGetPersonsQuery,
-  useRemoveRowMutation,
-} from '../redux';
-import { RowActions } from '../entities/RowActions';
+import { RowActions } from './RowActions';
 import { RenderTopToolbar } from './RenderTopToolbar';
-import { useDispatch, useSelector } from 'react-redux';
-import { LocalStorage, setPagination, setSerching, setSorting } from '../redux/tableSlice';
+import { useDispatch } from 'react-redux';
+import { setPagination, setSerching, setSorting } from '../redux/Persons/PersonsTableSlice';
+import { IGames } from '../redux/Games/IGames';
 
 const POSITION_ACTIONS_COLUMN = 'last';
 const MANTINE_PLACEHOLDER = 'Поиск';
 
-const Table = () => {
+export const Table = ({data, addRow, removeRow, editingRow, columns, tableState} : any) => {
+  
   interface IHandleSaveRow {
-    row: MRT_Row<IPerson>;
-    table: MRT_TableInstance<IPerson>;
+    row: MRT_Row<IGames>;
+    table: MRT_TableInstance<IGames> ;
     values: any;
   }
 
-  const { data = [] } = useGetPersonsQuery(null);
-  const [addPerson] = useAddRowMutation();
-  const [removePerson] = useRemoveRowMutation();
-  const [editingPerson] = useEditingRowMutation();
-  const columns = useMemo<MRT_ColumnDef<IPerson>[]>(
-    () => [
-      {
-        accessorKey: 'firstName',
-        header: 'First Name',
-        enableColumnActions: false,
-      },
-      {
-        accessorKey: 'lastName',
-        header: 'Last Name',
-        enableColumnActions: false,
-      },
-      {
-        accessorKey: 'address',
-        header: 'Address',
-        enableColumnActions: false,
-      },
-    ],
-    []
-  );
-
-  const handleSaveRow: MRT_TableOptions<IPerson>['onEditingRowSave'] = async ({
+  const handleSaveRow: MRT_TableOptions<IGames>['onEditingRowSave'] = async ({
     row,
     table,
     values,
   }: IHandleSaveRow) => {
-    await editingPerson({id: row.original.id, ...values});
+    await editingRow({id: row.original.id, ...values});
     table.setEditingRow(null);
   };
 
   const dispatch = useDispatch();
-  const tableState = useSelector((state: any) => state.table);
 
   const onSortingChange = (t: any) => {
     const newSorting = t(tableState.sorting);
@@ -81,8 +47,8 @@ const Table = () => {
     dispatch(setPagination(newPagination));
   }
 
-  const table: MRT_TableInstance<IPerson> = useMantineReactTable({
-    columns,
+    const table = useMantineReactTable({
+    columns: columns,
     data: data,
     enableFullScreenToggle: false,
     enableDensityToggle: false,
@@ -97,14 +63,14 @@ const Table = () => {
     onPaginationChange: onPaginationChange,
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
-    renderRowActions: ({ row }: { row: MRT_Row<IPerson> }) => (
-      <RowActions row={row} table={table} removePerson={removePerson} />
+    renderRowActions: ({ row }: { row: MRT_Row<IGames>}) => (
+      <RowActions row={row} table={table} removePerson={removeRow} />
     ),
     renderTopToolbar: ({ table }) => {
       return (
         <RenderTopToolbar
           table={table}
-          addPerson={addPerson}
+          addPerson={addRow}
           columns={columns}
         />
       );

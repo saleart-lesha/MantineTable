@@ -1,3 +1,3 @@
 export * from './store'
-export * from './personsApi'
-export * from './IPerson'
+export * from './Persons/personsApi'
+export * from './Persons/IPerson'

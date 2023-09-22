@@ -19,9 +19,9 @@ interface InitialState {
 
 
 
-const localStorageSorting = localStorage.getItem('filters');
-const localStorageFilter = localStorage.getItem('serching')
-const localStoragePagination = localStorage.getItem('pagination')
+const localStorageSorting = localStorage.getItem('filtersPersons');
+const localStorageFilter = localStorage.getItem('serchingPersons')
+const localStoragePagination = localStorage.getItem('paginationPersons')
 
 const initialState: InitialState = { sorting: [], serching: "", pagination: { pageIndex: 0, pageSize: 5 } };
 
@@ -39,28 +39,28 @@ if (localStoragePagination) {
 
 console.log(initialState);
 
-const tableSlice = createSlice({
-  name: 'table',
+const tableSlicePersons = createSlice({
+  name: 'tablePersons',
   initialState,
   reducers: {
     setSorting: (state, action) => {
         console.log(action.payload)
-      localStorage.setItem('filters', JSON.stringify(action.payload));
+      localStorage.setItem('filtersPersons', JSON.stringify(action.payload));
       return { ...state, sorting: action.payload };
     },
     setSerching: (state, action) => {
         
       const newSerching = action.payload !== undefined ? action.payload : '';
-      localStorage.setItem('serching', JSON.stringify(newSerching));
+      localStorage.setItem('serchingPersons', JSON.stringify(newSerching));
       return { ...state, serching: newSerching };
     },
     setPagination: (state, action) =>{
-        localStorage.setItem('pagination', JSON.stringify(action.payload));
+        localStorage.setItem('paginationPersons', JSON.stringify(action.payload));
         return{...state, pagination: action.payload}
     }
   },
 
 });
 
-export const { setSorting, setSerching, setPagination } = tableSlice.actions;
-export default tableSlice.reducer;
+export const { setSorting, setSerching, setPagination } = tableSlicePersons.actions;
+export default tableSlicePersons.reducer;

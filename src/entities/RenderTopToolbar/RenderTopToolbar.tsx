@@ -5,15 +5,15 @@ import {
   MRT_ToggleFiltersButton,
 } from 'mantine-react-table';
 import { addTableRow, createInputFields } from '../../features';
-import { IPerson } from '../../redux';
 import styles from './style.module.css';
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Group, Button, Flex, Input, TextInput } from '@mantine/core';
+import { Modal, Group, Button, Flex } from '@mantine/core';
+import { IGames } from '../../redux/Games/IGames';
 
 interface IRenderTopToolbar {
-  table: MRT_TableInstance<IPerson>;
+  table: MRT_TableInstance<IGames>;
   addPerson: any;
-  columns: MRT_ColumnDef<IPerson>[];
+  columns: MRT_ColumnDef<IGames>[];
 }
 
 export const RenderTopToolbar = ({
@@ -28,7 +28,7 @@ export const RenderTopToolbar = ({
       <MRT_GlobalFilterTextInput table={table} />
         <>
       <Modal opened={opened} onClose={close} withCloseButton={false}>
-      <form onSubmit={(e: any) => addTableRow(e, addPerson)}>
+      <form onSubmit={(e: any) => addTableRow(e, addPerson, columns)}>
         <div className={styles.section}>
           {createInputFields(columns)}
         </div>

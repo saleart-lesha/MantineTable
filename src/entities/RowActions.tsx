@@ -1,13 +1,12 @@
 import { ActionIcon, Box } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { MRT_Row, MRT_TableInstance } from 'mantine-react-table';
-import React from 'react';
-import { IPerson } from '../redux';
+import { IGames } from '../redux/Games/IGames';
 
 interface IRowActions {
   removePerson: any;
-  table: MRT_TableInstance<IPerson>;
-  row: MRT_Row<IPerson>;
+  table: MRT_TableInstance<IGames>;
+  row: MRT_Row<IGames>;
 }
 
 export const RowActions = ({ removePerson, table, row }: IRowActions) => {

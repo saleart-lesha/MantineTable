@@ -1,2 +1,2 @@
 export * from './addTableRow';
-export * from './createInputFields';
+export * from '../entities/RenderTopToolbar/createInputFields';

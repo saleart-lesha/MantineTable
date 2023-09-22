@@ -1,11 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { personsApi } from "./personsApi";
-import tableReducer from "./tableSlice";
+import { personsApi } from "./Persons/personsApi";
+import tablePersonsReducer from "./Persons/PersonsTableSlice"
+// import tableGamesReducer from "./Games/GamesTableSlice"
+import { gamesApi } from "./Games/GamesApi";
 
 export const store = configureStore({
     reducer: {
         [personsApi.reducerPath]: personsApi.reducer,
-        table: tableReducer,
+        [gamesApi.reducerPath]: gamesApi.reducer,
+        tablePersons: tablePersonsReducer,
+        // tableGames: tableGamesReducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(personsApi.middleware)
-})
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(
+            personsApi.middleware,
+            gamesApi.middleware
+        ),
+});

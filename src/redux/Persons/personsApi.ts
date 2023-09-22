@@ -9,7 +9,7 @@ export const personsApi = createApi({
     }),
     endpoints: (build) => ({
         getPersons: build.query<IPerson[], null>({
-            query: () => `data`,
+            query: () => `persons`,
             providesTags: (result, error, arg) =>
             result
                 ? [...result.map(({ id }) => ({ type: 'Persons' as const, id })), 'Persons']
@@ -17,7 +17,7 @@ export const personsApi = createApi({
         }),
         addRow: build.mutation({
             query: (body) => ({
-                url: 'data',
+                url: 'persons',
                 method: 'POST',
                 body,
             }),
@@ -25,14 +25,14 @@ export const personsApi = createApi({
         }),
         removeRow: build.mutation({
             query: (id) => ({
-                url: `data/${id}`,
+                url: `persons/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Persons']
         }),
         editingRow: build.mutation({
             query: ({id, ...body}) => ({
-                url: `data/${id}`,
+                url: `persons/${id}`,
                 method: 'PUT',
                 body,
             }),

@@ -1,10 +1,10 @@
 {
-  "data": [
+  "persons": [
     {
-      "id": 2,
-      "firstName": "Robert",
+      "firstName": "Zachary",
       "lastName": "Smith",
-      "address": "566 Brakus Inlet"
+      "address": "566 Brakus Inlet",
+      "id": 2
     },
     {
       "firstName": "Kevin",
@@ -13,10 +13,30 @@
       "id": 3
     },
     {
-      "firstName": "123",
-      "lastName": "123",
+      "firstName": "Иванов",
+      "lastName": "И.И.123",
       "address": "123",
-      "id": 4
+      "id": 6
+    }
+  ],
+  "games": [
+    {
+      "nameGames": "CS:GO",
+      "yearRelease": "2012",
+      "genre": "Шутер",
+      "id": 1
+    },
+    {
+      "nameGames": "DOTA 2",
+      "yearRelease": "2013",
+      "genre": "MOBA",
+      "id": 2
+    },
+    {
+      "nameGames": "Minecraft",
+      "yearRelease": "2009",
+      "genre": "Песочница",
+      "id": 3
     }
   ]
 }
