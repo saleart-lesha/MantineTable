@@ -9,18 +9,19 @@ import styles from './style.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button, Flex } from '@mantine/core';
 import { IGames } from '../../redux/Games/IGames';
+import { UnionTypes } from '../../pages/MainPage';
 
-interface IRenderTopToolbar {
-  table: MRT_TableInstance<IGames>;
+interface IRenderTopToolbar<T extends UnionTypes> {
+  table: MRT_TableInstance<T>;
   addPerson: any;
-  columns: MRT_ColumnDef<IGames>[];
+  columns: MRT_ColumnDef<T>[];
 }
 
-export const RenderTopToolbar = ({
+export const RenderTopToolbar = <T extends UnionTypes>({
   table,
   addPerson,
   columns,
-}: IRenderTopToolbar) => {
+}: IRenderTopToolbar<T>) => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <Flex p="md" gap="sm">

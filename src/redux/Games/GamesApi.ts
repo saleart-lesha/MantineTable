@@ -15,7 +15,7 @@ export const gamesApi = createApi({
                 ? [...result.map(({ id }) => ({ type: 'Games' as const, id })), 'Games']
                 : ['Games'],
         }),
-        addRowGames: build.mutation({
+        addRowGames: build.mutation<IGames, IGames>({
             query: (body) => ({
                 url: 'games',
                 method: 'POST',
@@ -23,14 +23,14 @@ export const gamesApi = createApi({
             }),
             invalidatesTags: ['Games']
         }),
-        removeRowGames: build.mutation({
+        removeRowGames: build.mutation<IGames, IGames>({
             query: (id) => ({
                 url: `games/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Games']
         }),
-        editingRowGames: build.mutation({
+        editingRowGames: build.mutation<IGames, IGames>({
             query: ({id, ...body}) => ({
                 url: `games/${id}`,
                 method: 'PUT',

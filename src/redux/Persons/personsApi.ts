@@ -15,7 +15,7 @@ export const personsApi = createApi({
                 ? [...result.map(({ id }) => ({ type: 'Persons' as const, id })), 'Persons']
                 : ['Persons'],
         }),
-        addRow: build.mutation({
+        addRow: build.mutation<IPerson, IPerson>({
             query: (body) => ({
                 url: 'persons',
                 method: 'POST',
@@ -23,14 +23,14 @@ export const personsApi = createApi({
             }),
             invalidatesTags: ['Persons']
         }),
-        removeRow: build.mutation({
+        removeRow: build.mutation<IPerson, IPerson>({
             query: (id) => ({
                 url: `persons/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Persons']
         }),
-        editingRow: build.mutation({
+        editingRow: build.mutation<IPerson, IPerson>({
             query: ({id, ...body}) => ({
                 url: `persons/${id}`,
                 method: 'PUT',

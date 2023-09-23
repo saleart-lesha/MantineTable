@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 import { useAddRowGamesMutation, useEditingRowGamesMutation, useGetGamesQuery, useRemoveRowGamesMutation } from '../redux/Games/GamesApi';
 import { IGames } from '../redux/Games/IGames';
 
+export type UnionTypes = IPerson | IGames;
+
 function MainPage() {
   // Persons
   const { data: PersonData = [] } = useGetPersonsQuery(null);
@@ -65,10 +67,10 @@ function MainPage() {
       []
     );
   
-    // const tableStateGames = useSelector((state: any) => state.tableGames);
+    const tableStateGames = useSelector((state: any) => state.tableGames);
   
 
-  return <><TableCard Data={PersonData}
+  return <><TableCard data={PersonData}
                       addRow={addPerson}
                       removeRow={removePerson}
                       editingRow={editingPerson}
@@ -77,7 +79,7 @@ function MainPage() {
                       title="Рабочие"
 
             />        
-            <TableCard Data={GamesData}
+            <TableCard data={GamesData}
                        addRow={addGames}
                        removeRow={removeGames}
                        editingRow={editingGames}

@@ -53,7 +53,7 @@ export {
 //       return { ...state, sorting: action.payload };
 //     },
 //     setSerching: (state, action) => {
-        
+//         console.log(action.payload)
 //       const newSerching = action.payload !== undefined ? action.payload : '';
 //       localStorage.setItem('serchingGames', JSON.stringify(newSerching));
 //       return { ...state, serching: newSerching };

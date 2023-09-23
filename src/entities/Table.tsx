@@ -4,25 +4,29 @@ import {
   type MRT_TableOptions,
   MRT_Row,
   MRT_TableInstance,
+  LiteralUnion,
 } from 'mantine-react-table';
 import { RowActions } from './RowActions';
 import { RenderTopToolbar } from './RenderTopToolbar';
 import { useDispatch } from 'react-redux';
 import { setPagination, setSerching, setSorting } from '../redux/Persons/PersonsTableSlice';
+import { TableCardProps } from '../widgets/TableCard';
 import { IGames } from '../redux/Games/IGames';
+import { IPerson } from '../redux';
+import { UnionTypes } from '../pages/MainPage';
 
 const POSITION_ACTIONS_COLUMN = 'last';
 const MANTINE_PLACEHOLDER = 'Поиск';
 
-export const Table = ({data, addRow, removeRow, editingRow, columns, tableState} : any) => {
+export const Table = <T extends UnionTypes>({data, addRow, removeRow, editingRow, columns, tableState} : TableCardProps<T>) => {
   
   interface IHandleSaveRow {
-    row: MRT_Row<IGames>;
-    table: MRT_TableInstance<IGames> ;
-    values: any;
+    row: MRT_Row<T>;
+    table: MRT_TableInstance<T> ;
+    values: Record<LiteralUnion<string & any, string>, any>; // & DeepKeys<T> 
   }
 
-  const handleSaveRow: MRT_TableOptions<IGames>['onEditingRowSave'] = async ({
+  const handleSaveRow : MRT_TableOptions<T>['onEditingRowSave'] = async ({
     row,
     table,
     values,
@@ -46,7 +50,7 @@ export const Table = ({data, addRow, removeRow, editingRow, columns, tableState}
     const newPagination = t(tableState.pagination);
     dispatch(setPagination(newPagination));
   }
-
+  console.log(tableState)
     const table = useMantineReactTable({
     columns: columns,
     data: data,
@@ -63,7 +67,7 @@ export const Table = ({data, addRow, removeRow, editingRow, columns, tableState}
     onPaginationChange: onPaginationChange,
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
-    renderRowActions: ({ row }: { row: MRT_Row<IGames>}) => (
+    renderRowActions: ({ row }: { row: MRT_Row<T>}) => (
       <RowActions row={row} table={table} removePerson={removeRow} />
     ),
     renderTopToolbar: ({ table }) => {

@@ -14,9 +14,9 @@
     },
     {
       "firstName": "Иванов",
-      "lastName": "И.И.123",
+      "lastName": "И.И.",
       "address": "123",
-      "id": 6
+      "id": 7
     }
   ],
   "games": [
