@@ -14,4 +14,5 @@ export const addTableRow = async <T extends UnionTypes>(event: any, addPerson: a
     obj[key] = event.target[i].value;   
   }
   await addPerson(obj).unwrap();
+  event.target.reset();
 };

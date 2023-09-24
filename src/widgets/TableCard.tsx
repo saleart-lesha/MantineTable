@@ -1,23 +1,16 @@
 import { ReactNode } from "react";
 import Table from "../entities/Table";
 import { MRT_ColumnDef } from "mantine-react-table";
-import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, MutationDefinition } from "@reduxjs/toolkit/dist/query/react";
-import { UnionTypes } from "../pages/MainPage";
-
-
+import { CRUDtypes, UnionTypes } from "../pages/MainPage";
 
 export interface TableCardProps <T extends UnionTypes> {
   data: T[];
-  addRow: MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Persons", any, "personsApi">> |
-  MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Games", any, "gamesApi">>; 
-  removeRow: MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Persons", any, "personsApi">> |
-  MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Games", any, "gamesApi">>; 
-  editingRow: MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Persons", any, "personsApi">> |
-  MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Games", any, "gamesApi">>; 
+  addRow: CRUDtypes; 
+  removeRow: CRUDtypes; 
+  editingRow: CRUDtypes; 
   columns: MRT_ColumnDef<T>[];
-  tableState: any;
   title: ReactNode;
+  tableState: any;
   onSortingChange : any;
   onGlobalFilterChange : any;
   onPaginationChange: any;

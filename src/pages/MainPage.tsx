@@ -8,8 +8,12 @@ import { useAddRowGamesMutation, useEditingRowGamesMutation, useGetGamesQuery, u
 import { IGames } from '../redux/Games/IGames';
 import { setPaginationGames, setSerchingGames, setSortingGames } from '../redux/Games/GamesTableSlice';
 import { setPaginationPersons, setSerchingPersons, setSortingPersons } from '../redux/Persons/PersonsTableSlice';
+import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, MutationDefinition } from "@reduxjs/toolkit/dist/query/react";
 
 export type UnionTypes = IPerson | IGames;
+export type CRUDtypes = MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Persons", any, "personsApi">> |
+                        MutationTrigger<MutationDefinition<any, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, "Games", any, "gamesApi">>;
 
 function MainPage() {
 

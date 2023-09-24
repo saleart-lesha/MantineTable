@@ -48,13 +48,13 @@ export const Table = <T extends UnionTypes>({data, addRow, removeRow, editingRow
     mantineSearchTextInputProps: { placeholder: MANTINE_PLACEHOLDER },
     onEditingRowSave: handleSaveRow,
     renderRowActions: ({ row }: { row: MRT_Row<T>}) => (
-      <RowActions row={row} table={table} removePerson={removeRow} />
+      <RowActions row={row} table={table} removeRow={removeRow} />
     ),
     renderTopToolbar: ({ table }) => {
       return (
         <RenderTopToolbar
           table={table}
-          addPerson={addRow}
+          addRow={addRow}
           columns={columns}
         />
       );

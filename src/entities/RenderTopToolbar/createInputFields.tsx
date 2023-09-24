@@ -1,7 +1,9 @@
 import { Input, Text } from '@mantine/core';
+import { MRT_ColumnDef } from 'mantine-react-table';
 import React from 'react';
+import { UnionTypes } from '../../pages/MainPage';
 
-export const createInputFields = (columns: any) => {
+export const createInputFields = <T extends UnionTypes>(columns: MRT_ColumnDef<T>[]) => {
   const toolbarInputFields = [];
 
   for (let i = 0; i < columns!.length; i++) {

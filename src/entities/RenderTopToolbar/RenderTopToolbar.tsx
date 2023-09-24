@@ -8,17 +8,17 @@ import { addTableRow, createInputFields } from '../../features';
 import styles from './style.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button, Flex } from '@mantine/core';
-import { UnionTypes } from '../../pages/MainPage';
+import { CRUDtypes, UnionTypes } from '../../pages/MainPage';
 
 interface IRenderTopToolbar<T extends UnionTypes> {
   table: MRT_TableInstance<T>;
-  addPerson: any;
+  addRow: CRUDtypes;
   columns: MRT_ColumnDef<T>[];
 }
 
 export const RenderTopToolbar = <T extends UnionTypes>({
   table,
-  addPerson,
+  addRow,
   columns,
 }: IRenderTopToolbar<T>) => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -28,7 +28,7 @@ export const RenderTopToolbar = <T extends UnionTypes>({
       <MRT_GlobalFilterTextInput table={table} />
         <>
       <Modal opened={opened} onClose={close} withCloseButton={false}>
-      <form onSubmit={(e: any) => addTableRow(e, addPerson, columns)}>
+      <form onSubmit={(e: any) => addTableRow(e, addRow, columns)}>
         <div className={styles.section}>
           {createInputFields(columns)}
         </div>
