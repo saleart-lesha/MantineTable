@@ -8,7 +8,6 @@ import { addTableRow, createInputFields } from '../../features';
 import styles from './style.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Group, Button, Flex } from '@mantine/core';
-import { IGames } from '../../redux/Games/IGames';
 import { UnionTypes } from '../../pages/MainPage';
 
 interface IRenderTopToolbar<T extends UnionTypes> {

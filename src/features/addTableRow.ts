@@ -1,5 +1,4 @@
 import { MRT_ColumnDef } from "mantine-react-table";
-import { IGames } from "../redux/Games/IGames";
 import { UnionTypes } from "../pages/MainPage";
 
 type Key = string | number | symbol

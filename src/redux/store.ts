@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { personsApi } from "./Persons/personsApi";
 import tablePersonsReducer from "./Persons/PersonsTableSlice"
-// import tableGamesReducer from "./Games/GamesTableSlice"
+import tableGamesReducer from "./Games/GamesTableSlice"
 import { gamesApi } from "./Games/GamesApi";
 
 export const store = configureStore({
@@ -9,7 +9,7 @@ export const store = configureStore({
         [personsApi.reducerPath]: personsApi.reducer,
         [gamesApi.reducerPath]: gamesApi.reducer,
         tablePersons: tablePersonsReducer,
-        // tableGames: tableGamesReducer
+        tableGames: tableGamesReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

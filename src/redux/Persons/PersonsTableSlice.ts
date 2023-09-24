@@ -37,24 +37,20 @@ if (localStoragePagination) {
     initialState.pagination = JSON.parse(localStoragePagination)
 }
 
-console.log(initialState);
-
 const tableSlicePersons = createSlice({
   name: 'tablePersons',
   initialState,
   reducers: {
-    setSorting: (state, action) => {
-        console.log(action.payload)
+    setSortingPersons: (state, action) => {
       localStorage.setItem('filtersPersons', JSON.stringify(action.payload));
       return { ...state, sorting: action.payload };
     },
-    setSerching: (state, action) => {
-      console.log(action.payload)
+    setSerchingPersons: (state, action) => {
       const newSerching = action.payload !== undefined ? action.payload : '';
       localStorage.setItem('serchingPersons', JSON.stringify(newSerching));
       return { ...state, serching: newSerching };
     },
-    setPagination: (state, action) =>{
+    setPaginationPersons: (state, action) =>{
         localStorage.setItem('paginationPersons', JSON.stringify(action.payload));
         return{...state, pagination: action.payload}
     }
@@ -62,5 +58,5 @@ const tableSlicePersons = createSlice({
 
 });
 
-export const { setSorting, setSerching, setPagination } = tableSlicePersons.actions;
+export const { setSortingPersons, setSerchingPersons, setPaginationPersons } = tableSlicePersons.actions;
 export default tableSlicePersons.reducer;
